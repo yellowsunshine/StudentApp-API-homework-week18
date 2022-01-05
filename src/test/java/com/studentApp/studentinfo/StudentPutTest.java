@@ -35,8 +35,8 @@ public class StudentPutTest extends TestBase {
             // .header((ContentType.JSON))
             .body(studentPojo)
             .when()
-            .post();//blank as there is no endpoint here
-        response.then().statusCode(201);
+            .put("/2");//blank as there is no endpoint here
+        response.then().statusCode(200);
         response.prettyPrint();
 
 }

@@ -14,7 +14,7 @@ public class StudentDeleteTest extends TestBase {
     @Test
     public void deleteStudentWithParameter(){
         Response response = given()
-                .pathParam("id", 5)//first parameter is String to give variable name, second is the value
+                .pathParam("id", 6)//first parameter is String to give variable name, second is the value
                 .when()
                 .delete("/{id}");//with path parameters
         response.then().statusCode(204);

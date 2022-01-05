@@ -3,6 +3,7 @@ package com.studentApp.studentinfo;
 
 import com.studentApp.model.StudentPojo;
 import com.studentApp.testbase.TestBase;
+import com.studentApp.utils.TestUtils;
 import io.restassured.response.Response;
 import org.junit.Test;
 
@@ -15,11 +16,11 @@ public class StudentPatchTest extends TestBase {
     public void updateStudentWithPatch(){
 
         StudentPojo studentPojo = new StudentPojo();
-        studentPojo.setEmail("prime123@gmail.com");
+        studentPojo.setEmail(TestUtils.getRandomText()+"@gmail.com");
 
         Response response = given()
                 .header("Content-Type", "application/json")
-                .pathParam("id", 103)
+                .pathParam("id", 10)
                 .body(studentPojo)
                 .when()
                 .patch("/{id}");

@@ -2,6 +2,7 @@ package com.studentApp.studentinfo;
 
 
 import com.studentApp.testbase.TestBase;
+import io.restassured.internal.RestAssuredResponseImpl;
 import io.restassured.response.Response;
 import org.junit.Test;
 
@@ -9,14 +10,13 @@ import java.util.HashMap;
 
 import static io.restassured.RestAssured.given;
 
-
 public class StudentGetTest extends TestBase {
 
     @Test
     public void getAllStudentsInfo() {
         Response response = given()
                 .when()
-                .get("/list");//only endpoint needed after extending TestBase
+                .get("/list");
         response.then().statusCode(200);
         response.prettyPrint();
     }
@@ -24,48 +24,43 @@ public class StudentGetTest extends TestBase {
     @Test
     public void getSingleStudentInfo() {
         //WITHOUT PARAMETER
-        /*Response response = given()
-                .when()
-                .get("/3");//only endpoint needed after extending TestBase
-        response.then().statusCode(200);
-        response.prettyPrint();*/
-
-        //WITH PATH PARAMETER
         Response response = given()
-                .pathParam("id", 3)//first parameter is String to give variable name, second is the value
                 .when()
-                .get("/{id}");//with path parameters
+                .get("/3");
         response.then().statusCode(200);
         response.prettyPrint();
+
+    }
+
+    @Test
+    public void getSingleStudentInfoWithPathParameter() {
+        //WITH PATH PARAMETER
+        Response response1 = given()
+                .pathParam("id", 10)
+                .when()
+                .get("/{id}");
+        response1.then().statusCode(200);
+        response1.prettyPrint();
     }
 
     @Test
     public void searchStudentWithParameter() {
-        //WITH QUERY PARAMATERS
-        /*Response response = given()
-                .queryParam("programme", "Financial Analysis")
-                .queryParam("limit", 2)
-                .when()
-                .get("/3");
-        response.then().statusCode(200);
-        response.prettyPrint();*/
-
+        //WITH QUERY PARAMETERS "programme", "Financial Analysis" & "limit", 2 as map
         HashMap<String, Object> qParams = new HashMap<>();
         qParams.put("programme", "Financial Analysis");
         qParams.put("limit", 2);
 
         Response response = given()
-                //.queryParam("programme", "Financial Analysis")
-                //.queryParam("limit", 2)
-                .queryParams(qParams)//choose params plural!
+                .queryParams(qParams)
                 .when()
-                .get("/3");
+                .get("/list");
         response.then().statusCode(200);
         response.prettyPrint();
-
     }
 
-
-
-
 }
+
+
+
+
+

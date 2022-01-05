@@ -3,6 +3,8 @@ package com.studentApp.studentinfo;
 
 import com.studentApp.model.StudentPojo;
 import com.studentApp.testbase.TestBase;
+import com.studentApp.utils.TestUtils;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 
@@ -16,25 +18,23 @@ public class StudentPostTest extends TestBase {
 
     @Test
     public void createStudent() {
-        List<String> courseList = new ArrayList<>();
-        courseList.add("Java");
-        courseList.add("Selenium");
+        List<String> list = new ArrayList<>();
+        list.add("Selenium");
+        list.add("Java");
 
         StudentPojo studentPojo = new StudentPojo();
-        studentPojo.setFirstName("Prime1");
-        studentPojo.setLastName("Testing");
-        studentPojo.setEmail("primetesting2@gmail.com");
+        studentPojo.setFirstName(TestUtils.getRandomText());
+        studentPojo.setLastName(TestUtils.getRandomText());
+        studentPojo.setEmail(TestUtils.getRandomText()+"@gmail.com");
         studentPojo.setProgramme("Automation Testing");
-        studentPojo.setCourses(courseList);
+        studentPojo.setCourses(list);
 
         Response response = given()
-                .header("Content-Type", "application/json")
-               // .header((ContentType.JSON))
+                .contentType(ContentType.JSON)
                 .body(studentPojo)
                 .when()
-                .post();//blank as there is no endpoint here
+                .post();
         response.then().statusCode(201);
         response.prettyPrint();
-
     }
 }
